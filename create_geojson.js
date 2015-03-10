@@ -23,7 +23,7 @@ pg.connect(conString, function(err, client, done) {
   if(err) {
     return console.error('error fetching client from pool', err);
   }
-  client.query('SELECT name, group_name, coverage, status, location, values, st_asgeojson(geom) as geom from pit;', function(err, result) {
+  client.query('SELECT name, group_name, coverage, status, location, values, st_asgeojson(geom) as geom, ST_X(st_centroid(geom)) as center_long, ST_Y(st_centroid(geom)) as center_lat from pit;', function(err, result) {
     //call `done()` to release the client back to the pool
     done();
 
